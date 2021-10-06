@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class BinarySearch07 {
+    public static void main(String[] args) {
+        int[] arr = {1, 55, 55, 55, 55, 55, 55, 60, 323, 344};
+        List res = search(arr, 0, arr.length - 1, 55);
+        Collections.sort(res); //给List集合排序
+        System.out.println(res);
+    }
+
+    public static List<Integer> search(int[] arr, int left, int right, int findVal) {
+        int mid = (left + right) / 2;
+        int midVal = arr[mid];
+
+        if (findVal > midVal) {
+            return search(arr, mid + 1, right, findVal);
+        } else if (findVal < midVal) {
+            return search(arr, left, mid - 1, findVal);
+        } else {
+            List<Integer> resList = new ArrayList<>();
+            resList.add(mid);
+            int temp = mid - 1;
+            while (true) {
+                if (temp < 0 || arr[temp] != findVal) {
+                    break;
+                }
+                resList.add(temp);
+                temp -= 1;
+            }
+
+            temp = mid + 1;
+            while (true) {
+                if (temp > arr.length - 1 || arr[temp] != findVal) {
+                    break;
+                }
+                resList.add(temp);
+                temp += 1;
+            }
+            return resList;
+        }
+    }
+}
